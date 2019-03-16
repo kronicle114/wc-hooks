@@ -72,7 +72,6 @@ const cheeses = [
 
 // Mount routers
 app.get('/api/cheeses', (req, res, next) => {
-
   return res.json(cheeses);
 });
 

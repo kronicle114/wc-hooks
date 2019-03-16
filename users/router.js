@@ -1,11 +1,9 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const { User } = require('./models');
 
 const router = express.Router();
-
 const jsonParser = bodyParser.json();
 
 router.post('/', jsonParser, (req, res) => {
@@ -61,13 +59,11 @@ router.post('/', jsonParser, (req, res) => {
 
   const tooSmallField = Object.keys(sizedFields).find(
     field =>
-      'min' in sizedFields[field] &&
-            req.body[field].trim().length < sizedFields[field].min
+      'min' in sizedFields[field] && req.body[field].trim().length < sizedFields[field].min
   );
   const tooLargeField = Object.keys(sizedFields).find(
     field =>
-      'max' in sizedFields[field] &&
-            req.body[field].trim().length > sizedFields[field].max
+      'max' in sizedFields[field] && req.body[field].trim().length > sizedFields[field].max
   );
 
   if (tooSmallField || tooLargeField) {
@@ -83,11 +79,11 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let {username, password, firstName = '', lastName = ''} = req.body;
+  let { username, password, name = ''/* , firstName = '', lastName = '' */} = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
-  firstName = firstName.trim();
-  lastName = lastName.trim();
+  // firstName = firstName.trim();
+  // lastName = lastName.trim();
 
   return User.find({username})
     .count()
@@ -107,8 +103,9 @@ router.post('/', jsonParser, (req, res) => {
       return User.create({
         username,
         password: hash,
-        firstName,
-        lastName
+        name,
+      /*   firstName,
+        lastName */
       });
     })
     .then(user => {
