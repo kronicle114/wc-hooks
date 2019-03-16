@@ -99,7 +99,7 @@ const runServer = (port = PORT) => {
 
 if (require.main === module) {
   dbConnect();
-  runServer(DATABASE_URL);
+  runServer();
 }
 
 module.exports = { app, runServer };
